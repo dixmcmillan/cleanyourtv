@@ -48,5 +48,10 @@ The picture mode is not in `settings`: Settings sets it with a private HSP call 
 
 ## Status
 
-Probed and backed up 2026-10-25 on one US unit (wired, firmware above). The list has not been applied yet;
-it reaches upstream only after a few days of living with it, per CONTRIBUTING.
+Probed and backed up 2026-10-25 on one US unit (wired, firmware above). The same day the list was applied
+debloat-only (launcherx and setupwraith left enabled, no HomeKeyService). Afterwards `input keyevent 708` still
+opened `ArtModeActivity` and HOME still returned to launcherx. The checklist above is still open, and the list
+goes upstream only after a few days of living with it, per CONTRIBUTING.
+
+With the set off, ADB on 5555 stops answering. Wake-on-LAN is on by default (`settings get global
+M_isEnableWol` is 1), so a home-automation setup should wake the set with a magic packet before sending keys.
