@@ -1,0 +1,6 @@
+{
+  "tv": "Hisense CanvasTV S7N (hengshan_canvas, MediaTek), US",
+  "os": "Google TV 12",
+  "brand": "Hisense",
+  "notes": "Art TV on the U75's hengshan board and build: same Vtp_ACR, VIDAA preloads, store/hotel/factory, DeviceAssistant cleaner and Google PAI removals; Art Mode (com.vt.arttv.artmode), its radar motion and light sensors, and the smartsense/AIoT family kept; the Art button (keycode 708) is routed through launcherx, so app_keys maps it back"
+}

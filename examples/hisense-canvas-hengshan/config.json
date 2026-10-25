@@ -1,0 +1,19 @@
+{
+  "dock_apps": [
+    "com.plexapp.android",
+    "com.netflix.ninja",
+    "com.google.android.youtube.tv",
+    "com.hulu.livingroomplus",
+    "com.disney.disneyplus",
+    "com.wbd.stream"
+  ],
+  "hidden_apps": [
+    "com.vt.tv.tvcenter"
+  ],
+  "live_tv_package": "com.vt.tv.tvcenter",
+  "columns": 6,
+  "rows_below_dock": 0,
+  "app_keys": [
+    "708:com.vt.arttv.artmode"
+  ]
+}

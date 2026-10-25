@@ -1,0 +1,80 @@
+# Hisense CanvasTV S7N (US), Android model "SmartTV 4K", product hengshan_canvas, device hengshan,
+# MediaTek (ro.board.platform merak), Google TV / Android 12, build STT2.230310.002
+# (fingerprint Hisense/hengshan_canvas/hengshan:12/STT2.230310.002/00.00.00.166), security patch 2026-02-05.
+# Same board and build as examples/hisense-u75-hengshan; this is that list, checked package by package
+# against this set (all present), minus what an art TV needs. Probed 2026-10-25 over network ADB.
+#
+# Apply:   TV_HOST=<tv ip> tools/disable.sh examples/hisense-canvas-hengshan/debloat.txt
+# Undo:    TV_HOST=<tv ip> tools/restore.sh examples/hisense-canvas-hengshan/debloat.txt com.google.android.apps.tv.launcherx
+# Everything is DISABLED, not uninstalled. Comment out any line you want to keep.
+#
+# WARNING (from the U75 list, same family): do not add com.vt.tv.smartsense, com.vt.tv.smartsense.ui,
+# com.vt.tv.aiot, com.vt.tv.aiotprotocolapp or com.vt.tv.aiotsystemservice. On related Hisense
+# firmware disabling that family sent the TV to Android Recovery. On this set smartsense also carries
+# the remote's global keys (the Art button among them), the remote backlight and PowerOnBehavior.
+#
+# Keep, Art Mode (seen in logcat while the Art button was pressed and released):
+#   com.vt.arttv.artmode      Art Gallery: ArtModeActivity, ArtModeService, ScreenSaverActivity,
+#                             UpgradeImageService (art downloads). Runs as android.uid.system.
+#   com.vt.tv.smartsense      catches the Art button (keycode 708) and hands it to launcherx
+#   com.vt.source.external, com.vt.source.tuner   Art Mode reads the current source on entry
+#   com.vt.tvservice, com.vt.avmiddleware, vendor hs_av_service   radar motion sensor ("radar report
+#                             level"), light sensor and Art picture settings (PqPicture)
+#   com.vt.tv.aipq, com.vt.tv.videocolor, com.vt.roomcalibration   picture processing
+# Keep, as on the U75: com.vt.tv.tvcenter (Live TV and HDMI player), com.vt.tv.input,
+#   com.mediatek.dtv.tvinput.framework.server, com.vt.tv.commonui, com.vt.tvplayer, com.vt.edv.drmp,
+#   com.mediatek.autopair, com.mediatek.android.tv.globalkeyoverlay, com.google.android.tv.remote.service,
+#   com.google.android.inputmethod.latin, com.android.vending, com.google.android.gms,
+#   com.google.android.gsf, com.android.tv.settings, com.vt.tv.smartservice,
+#   com.dolby.android.audio.service, com.vt.eula, com.vt.udpserver, com.vt.tv.customerlauncher
+# Already disabled at the factory: com.mediatek.tis, com.mediatek.dtv.tvinput.isdbtuner,
+#   com.mediatek.dtv.tvinput.dvbtuner
+# Stock launcher: com.google.android.apps.tv.launcherx (Google TV), handled by build-and-install.sh.
+# README.md here explains why disabling it needs app_keys for the Art button.
+#
+# Not added, unlike the U75 list:
+#   com.vt.hishow             Family Moment photos and screensaver. Kept until phone photo upload to
+#                             Art Mode is checked without it.
+
+# Hisense ACR: automatic content recognition, the codePath is literally Vtp_ACR
+com.vt.tv.evservice
+
+# Hisense content, preloads and promo surfaces. After applying, check that Art Mode still downloads
+# art and still takes photos from the phone.
+net.vidaatv.hisense.android.tv       # VIDAA Channels Plus, the FAST free-channel preload
+com.vidaa.oemtabcontentprovider      # feeds the VIDAA content tab
+com.hisense.odinbrowser              # built-in web browser, off by choice
+
+# Retail demo, hotel/commercial mode, factory tools
+com.vt.storemode
+com.vt.tv.b2b
+com.vt.factory
+com.vt.fte                           # first-time-experience walkthrough, setup only
+
+# Voice assistant, off by choice (Google Assistant stays)
+com.vt.alexa                         # HiAlexa
+
+# Broadcast interactive middleware. Only does anything with the built-in tuner; off by choice
+# on a set used with streaming apps and HDMI.
+tv.mopa.ginga                        # Ginga, the Brazilian interactive-broadcast stack
+com.vt.tv.interactive
+
+# Background services that are not needed
+com.vt.tv.protector                  # "DeviceAssistant" cleaner: CACHE_CLEAN, TURBO_MODE, SPACE_PROTECTION
+com.vt.tv.calmanconnector            # Calman professional calibration connector
+
+# Google TV ad, preload and tracking services
+android.autoinstalls.config.google.gtvpai   # PAI: silently auto-installs partner apps
+com.google.android.partnersetup             # partner referral tracking
+com.google.android.feedback                 # crash/feedback uploader
+
+# Unused on a television
+com.android.printspooler
+com.google.android.syncadapters.calendar
+com.android.providers.calendar
+com.android.providers.contacts
+
+# Launcher phase only. Google TV's setup wizard also claims android.intent.category.HOME, so it takes
+# Home the moment the stock launcher is disabled. Leave this line out if you are only debloating.
+# On some sets the wizard holds the Wi-Fi credentials saved during setup; this set is wired.
+com.google.android.tungsten.setupwraith
